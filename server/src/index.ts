@@ -1,32 +1,21 @@
 import express from "express";
 import { graphqlHTTP } from "express-graphql";
-import { buildSchema } from "graphql";
+import { buildASTSchema } from "graphql";
+import schema from "./schema";
+import root from "./resolver";
+import { config } from "dotenv";
 
 const main = async () => {
   const app = express();
 
+  // .env
+  config({ path: `${__dirname}/../.env` });
+
   app.use(
     "/graphql",
     graphqlHTTP({
-      schema: buildSchema(`
-        type RootQuery {
-            posts: [String!]!
-        }
-
-        type RootMutation {
-            createPost(name: String): String
-        }
-
-        schema {
-            query: RootQuery
-            mutation: RootMutation
-        }
-    `),
-      rootValue: {
-        posts: () => {
-          return ["hello", "guys", "teehee"];
-        },
-      },
+      schema: buildASTSchema(schema),
+      rootValue: root,
       graphiql: true,
     })
   );
@@ -35,9 +24,10 @@ const main = async () => {
     res.send("Hello World");
   });
 
-  app.listen(3000);
+  app.listen(process.env.PORT || 3000);
 };
 
+// Error Handling
 main().catch((err) => {
   console.log(err);
 });
