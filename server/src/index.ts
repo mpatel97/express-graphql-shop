@@ -1,9 +1,9 @@
 import express from "express";
 import { graphqlHTTP } from "express-graphql";
-import graphQLSchema from "./schema";
-import userResolver from "./resolvers/user";
-import productResolver from "./resolvers/product";
-import productCategoryResolver from "./resolvers/productCategory";
+import graphQLSchema from "./graphQL/schema";
+import userResolver from "./graphQL/resolvers/userResolver";
+import productResolver from "./graphQL/resolvers/productResolver";
+import productCategoryResolver from "./graphQL/resolvers/productCategoryResolver";
 import { connect, connection } from "mongoose";
 import { config } from "dotenv";
 
