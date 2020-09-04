@@ -25,6 +25,8 @@ const main = async () => {
     console.error.bind(console, "MongoDB connection error:")
   );
 
+  app.use(express.json())
+
   // Setup GraphQL
   app.use(
     "/graphql",
