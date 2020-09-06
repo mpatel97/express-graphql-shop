@@ -5,6 +5,7 @@ import userResolver from "./graphQL/resolvers/userResolver";
 import productResolver from "./graphQL/resolvers/productResolver";
 import productCategoryResolver from "./graphQL/resolvers/productCategoryResolver";
 import { connect, connection } from "mongoose";
+import session from "express-session";
 import { config } from "dotenv";
 
 const main = async () => {
@@ -25,7 +26,15 @@ const main = async () => {
     console.error.bind(console, "MongoDB connection error:")
   );
 
-  app.use(express.json())
+  app.use(express.json());
+
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET!,
+      resave: false,
+      saveUninitialized: false,
+    })
+  );
 
   // Setup GraphQL
   app.use(
@@ -49,6 +58,12 @@ const main = async () => {
 };
 
 // Error Handling
-main().catch((err) => {
-  console.log(err);
-});
+main()
+  .then(() => {
+    console.log(
+      `Server started on http://localhost:${process.env.PORT || 3000}/graphql`
+    );
+  })
+  .catch((err) => {
+    console.log(err);
+  });

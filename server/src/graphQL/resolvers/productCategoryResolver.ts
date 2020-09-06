@@ -10,17 +10,21 @@ export default {
     }
   },
 
-  productCategory: async (req: any) => {
+  productCategory: async (args: any) => {
     try {
-      return await ProductCategory.findById(req.productCategoryInput.id);
+      return await ProductCategory.findById(args.productCategoryInput.id);
     } catch (err) {
       console.log(err);
       throw err;
     }
   },
 
-  createProductCategory: async (req: any) => {
-    let { name, description, parentProductCategory } = req.productCategoryInput;
+  createProductCategory: async (args: any) => {
+    let {
+      name,
+      description,
+      parentProductCategory,
+    } = args.productCategoryInput;
     const productCategory = new ProductCategory({
       name,
       description,

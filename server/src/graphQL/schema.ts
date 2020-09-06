@@ -7,7 +7,6 @@ export default buildASTSchema(gql`
     firstName: String!
     lastName: String!
     email: String!
-    password: String!
   }
 
   input UserInput {
@@ -42,18 +41,18 @@ export default buildASTSchema(gql`
   }
 
   type Query {
-    users: [User!]!
-    user(id: String): User
+    login(email: String!, password: String!): User!
+    currentUser: User
 
     products: [Product!]!
-    product(id: String): Product
+    product(id: String!): Product
 
     productCategories: [ProductCategory!]!
-    productCategory(id: String): ProductCategory
+    productCategory(id: String!): ProductCategory
   }
 
   type Mutation {
-    createUser(userInput: UserInput): User
+    register(userInput: UserInput): Boolean!
 
     createProduct(productInput: ProductInput): Product
 

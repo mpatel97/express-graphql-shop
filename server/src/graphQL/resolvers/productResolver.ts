@@ -10,17 +10,17 @@ export default {
     }
   },
 
-  product: async (req: any) => {
+  product: async (args: any) => {
     try {
-      return await Product.findById(req.productInput.id);
+      return await Product.findById(args.productInput.id);
     } catch (err) {
       console.log(err);
       throw err;
     }
   },
 
-  createProduct: async (req: any) => {
-    let { name, description } = req.productInput;
+  createProduct: async (args: any) => {
+    let { name, description } = args.productInput;
 
     const product = new Product({
       name,
